@@ -1,0 +1,41 @@
+# Oumi LoRA fine-tuning config for SOS voice classifier
+# Run: oumi train -c voice_checkpoints/oumi_train_config.yaml
+
+model:
+  model_name: "HuggingFaceTB/SmolLM2-135M-Instruct"
+  dtype: "bfloat16"
+  trust_remote_code: true
+
+data:
+  train:
+    datasets:
+      - dataset_name: "json"
+        dataset_path: "/Users/akshparekh/Documents/sos-answered/voice_data/train.jsonl"
+  val:
+    datasets:
+      - dataset_name: "json"
+        dataset_path: "/Users/akshparekh/Documents/sos-answered/voice_data/val.jsonl"
+
+training:
+  output_dir: "/Users/akshparekh/Documents/sos-answered/voice_checkpoints"
+  num_train_epochs: 10
+  per_device_train_batch_size: 16
+  learning_rate: 0.0002
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  logging_steps: 5
+  save_strategy: "epoch"
+  eval_strategy: "epoch"
+  use_peft: true
+  gradient_checkpointing: true
+
+peft:
+  peft_type: "lora"
+  lora_r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  lora_target_modules:
+    - "q_proj"
+    - "v_proj"
+    - "o_proj"
+    - "k_proj"

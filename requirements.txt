@@ -1,0 +1,11 @@
+torch>=2.1.0
+torchvision
+h5py
+numpy
+tqdm
+transformers
+peft
+tavily-python
+mujoco>=3.0.0
+gymnasium>=1.0.0
+opencv-python
